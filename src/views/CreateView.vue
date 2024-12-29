@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref, onMounted } from 'vue'
+import { reactive, ref } from 'vue'
 import InputBase from '@/components/InputBase.vue'
 import SubmitBase from '@/components/SubmitBase.vue'
 

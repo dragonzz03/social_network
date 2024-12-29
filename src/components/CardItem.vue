@@ -1,18 +1,8 @@
 <script setup>
 defineProps({
-  title: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    default: '',
-  },
-  id: {
-    type: String,
-    required: true,
-    default: '',
-  },
+  title: { type: String, required: true },
+  subTitle: { type: String, default: '' },
+  id: { type: String, required: true, default: '' },
 })
 </script>
 <template>
@@ -23,10 +13,10 @@ defineProps({
       {{ title }}
     </div>
     <div class="col-span-2 rounded-md">
-      {{ description }}
+      {{ subTitle }}
     </div>
     <div class="col-span-1">
-      <a :href="`/detail/${id}`" @click="addIdToCookies(id)">{{ title }}</a>
+      <a :href="`/detail/${id}`">See detail</a>
     </div>
   </div>
 </template>

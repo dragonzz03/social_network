@@ -3,8 +3,12 @@ import { reactive, ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import InputBase from '@/components/InputBase.vue'
 import SubmitBase from '@/components/SubmitBase.vue'
+import LoaderView from '@/components/LoaderView.vue'
 import api from '../axios'
+
 const btnText = ref('Update')
+const isLoading = ref(false)
+
 const formData = reactive({
   name: '',
   email: '',
@@ -35,6 +39,7 @@ const inputAttrs = [
 const route = useRoute()
 
 const fetchArticleById = async (id) => {
+  isLoading.value = true
   try {
     const response = await api.get(`/article/${id}`)
     const article = response.data
@@ -43,6 +48,7 @@ const fetchArticleById = async (id) => {
     formData.title = article.title
     formData.subTitle = article.subTitle
     formData.description = article.description
+    isLoading.value = false
   } catch (error) {
     console.error('Error fetching article by id:', error)
   }
@@ -68,8 +74,12 @@ onMounted(() => {
 
 <template>
   <form @submit.prevent="handleSubmit">
-    <div class="lg:max-w-screen-md mx-auto flex flex-col">
-      <div class="grid grid-cols-3 gap-4">
+    <div class="lg:max-w-screen-md mx-auto flex flex-col min-h-screen">
+      <div v-if="isLoading" class="flex items-center justify-center">
+        <LoaderView />
+      </div>
+
+      <div v-else class="grid grid-cols-3 gap-4">
         <div class="col-span-2">
           <div v-for="(input, index) in inputAttrs" :key="index">
             <InputBase
